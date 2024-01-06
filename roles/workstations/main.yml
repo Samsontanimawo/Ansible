@@ -1,0 +1,9 @@
+---
+- name: Restart services for workstations
+  service:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - apache2
+    - nginx
+

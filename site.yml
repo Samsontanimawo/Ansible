@@ -1,0 +1,7 @@
+---
+- hosts: workstations
+  become: true
+  roles:
+    - workstations
+    - webserver
+
