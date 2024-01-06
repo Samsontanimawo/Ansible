@@ -1,0 +1,33 @@
+---
+- name: Install Certbot and Obtain SSL/TLS Certificates
+  hosts: all
+  become: true
+  tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Install Certbot
+      apt:
+        name: certbot
+        state: present
+
+    - name: Install Certbot Apache plugin (adjust if using Nginx)
+      apt:
+        name: certbot-apache
+        state: present
+
+    - name: Obtain SSL/TLS certificates (Apache)
+      command: certbot --apache --non-interactive --agree-tos --email your_email@example.com
+      ignore_errors: yes
+
+    # Alternatively, for Nginx, use the following tasks:
+    # - name: Install Certbot Nginx plugin (adjust if using Apache)
+    #   apt:
+    #     name: certbot-nginx
+    #     state: present
+
+    # - name: Obtain SSL/TLS certificates (Nginx)
+    #   command: certbot --nginx --non-interactive --agree-tos --email your_email@example.com
+    #   ignore_errors: yes
+
