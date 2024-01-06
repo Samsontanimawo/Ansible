@@ -1,0 +1,44 @@
+---
+- name: Install Fun Packages on Ubuntu
+  hosts: workstations
+  become: true
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Install Fortune
+      apt:
+        name: fortune
+        state: present
+
+    - name: Install Cowsay
+      apt:
+        name: cowsay
+        state: present
+
+    - name: Install Figlet
+      apt:
+        name: figlet
+        state: present
+
+    - name: Install SL
+      apt:
+        name: sl
+        state: present
+
+    - name: Install Oneko
+      apt:
+        name: oneko
+        state: present
+
+    - name: Install xcowsay
+      apt:
+        name: xcowsay
+        state: present
+
+    - name: Install Toilet
+      apt:
+        name: toilet
+        state: present
+

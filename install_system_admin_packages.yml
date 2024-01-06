@@ -1,0 +1,91 @@
+# Run this code to install the packages: nano install_system_admin_packages.yml  
+
+---
+- name: Install System Administration Packages on Ubuntu
+  hosts: workstations  # Adjust the host group based on your inventory
+  become: true
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+
+    - name: Install htop
+      apt:
+        name: htop
+        state: present
+
+    - name: Install logrotate
+      apt:
+        name: logrotate
+        state: present
+
+    - name: Install rsyslog
+      apt:
+        name: rsyslog
+        state: present
+
+    - name: Install ufw
+      apt:
+        name: ufw
+        state: present
+
+    - name: Install fail2ban
+      apt:
+        name: fail2ban
+        state: present
+
+    - name: Install clamav
+      apt:
+        name: clamav
+        state: present
+
+    - name: Install apt
+      apt:
+        name: apt
+        state: present
+
+    - name: Install net-tools
+      apt:
+        name: net-tools
+        state: present
+
+    - name: Install iputils-ping
+      apt:
+        name: iputils-ping
+        state: present
+
+    - name: Install parted
+      apt:
+        name: parted
+        state: present
+
+    - name: Install lvm2
+      apt:
+        name: lvm2
+        state: present
+
+    - name: Install nano
+      apt:
+        name: nano
+        state: present
+
+    - name: Install openssh-server
+      apt:
+        name: openssh-server
+        state: present
+
+    - name: Install ntp
+      apt:
+        name: ntp
+        state: present
+
+    - name: Install grub-customizer
+      apt:
+        name: grub-customizer
+        state: present
+
+    - name: Install rsync
+      apt:
+        name: rsync
+        state: present
+
