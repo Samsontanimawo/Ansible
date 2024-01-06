@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  tasks:
+    - name: create a file with name printing every 3 seconds
+      command: echo "Daniel Tanimawo is a guru"  >> /home/daniel/Ansible/print_name.txt
+      loop: "{{range(10)}}"
+      loop_control:
+        pause: 3
+
