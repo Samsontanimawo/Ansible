@@ -1,0 +1,13 @@
+---
+- name: Check Nginx Version
+  hosts: workstations
+  become: true
+  tasks:
+    - name: Check Nginx version
+      command: nginx -v
+      register: nginx_version_output
+
+    - name: Display Nginx version
+      debug:
+        var: nginx_version_output.stdout_lines
+
