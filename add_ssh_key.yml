@@ -1,0 +1,9 @@
+---
+- hosts: ubuntu_servers
+  become: true
+  tasks:
+    - name: Add SSH key to authorized_keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "your_public_key_here"
+# Replace the key with your public key

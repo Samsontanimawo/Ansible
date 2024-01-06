@@ -1,0 +1,19 @@
+[ubuntu_servers]
+server1
+server2
+server3
+server4
+server5
+server6
+server7
+server8
+server9
+server10
+server11
+server12
+server13
+server14
+server15
+# Add SSH key to all the servers. Run the add_ssh_key.yml
+# Run ansible-playbook -i inventory.ini add_ssh_key.yml --ask-pass --ask-become-pass
+# ssh-keygen -t rsa -b 2048 - To generate SSH key if it's not present in the server
