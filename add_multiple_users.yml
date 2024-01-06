@@ -1,0 +1,16 @@
+---
+- hosts: workstations
+  become: true
+  tasks:
+    - name: Create users
+      user:
+        name: "{{ item.name }}"
+        group: root
+        password: "{{ 'password' | password_hash('sha512') }}"
+      loop:
+        - { name: 'John' }
+        - { name: 'Sam' }
+        - { name: 'Paul' }
+        - { name: 'Matthew' }
+        - { name: 'Andrew' }
+

@@ -1,0 +1,15 @@
+---
+- hosts: workstations
+  become: true
+  tasks:
+    - name: Remove users
+      user:
+        name: "{{ item }}"
+        state: absent
+      loop:
+        - 'John'
+        - 'Sam'
+        - 'Paul'
+        - 'Matthew'
+        - 'Andrew'
+
