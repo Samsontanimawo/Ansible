@@ -1,0 +1,28 @@
+# How to add a user to linux server and give him the root privilege. Login without sudo password
+# Create a separate file called sudoer_username. E.g sudoer_Tanimawo
+# Add this line to above file: Tanimawo ALL=(ALL) NOPASSWD: ALL 
+# Run cat .ssh/authorized_keys to see the user key
+
+- hosts: workstations
+  become: true
+  tasks:
+    - name: Create a user called Tanimawo
+      tags: always
+      user:
+        name: Tanimawo
+        group: root
+
+    - name: Add SSH key to authorized_keys
+      tags: always
+      authorized_key:
+        user: Tanimawo
+        key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC+t2qMgxM/fOVzO0k3Xi1hsGbKNTJ5Gvc8BGl5qWfPd ansible"
+
+    - name: Add sudoers file for Tanimawo
+      tags: always
+      copy:
+         src: sudoer_Tanimawo
+         dest: /etc/sudoers.d/Tanimawo
+         owner: root
+         group: root
+         mode: 0440

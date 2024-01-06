@@ -2,9 +2,9 @@
 - hosts: workstations
   become: true
   tasks:
-    - name: Create user samson
+    - name: Create user Mary
       user:
-        name: samson
+        name: Mary
         group: root
 
 # Run cat /etc/passwd to check the users in the account
