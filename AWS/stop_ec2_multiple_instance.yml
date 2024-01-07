@@ -1,0 +1,29 @@
+- name: Stop Multiple EC2 Instances
+  hosts: localhost
+  vars:
+    region: "ca-central-1"  # Update with your region
+    instance_ids:
+      - "i-0c6c897d364139e1e"  # Update with your instance IDs
+      - "i-080ae62da720e0eb2"  # Add more instance IDs as needed
+      - "i-0166d4c4465fecc3e"
+      - "i-06b61d5e826db3e94"
+  tasks:
+    - name: Get information about the specified EC2 instances
+      community.aws.ec2_instance_info:
+        region: "{{ region }}"
+        instance_ids: "{{ instance_ids }}"
+      register: ec2_instance_info
+
+    - name: Check if any instances are not running
+      fail:
+        msg: "One or more specified EC2 instances are not in the 'running' state."
+      when: item.state.name != 'running'
+      loop: "{{ ec2_instance_info.instances }}"
+
+    - name: Stop the EC2 instances
+      community.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_ids: "{{ instance_ids }}"
+        state: stopped
+      when: ec2_instance_info.instances | length > 0  # Only stop instances if there are running instances
+

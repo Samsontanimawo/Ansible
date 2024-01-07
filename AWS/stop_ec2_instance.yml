@@ -1,0 +1,27 @@
+- name: Stop EC2 Instance
+  hosts: localhost
+  tasks:
+    - name: Stop the specified EC2 instance
+      community.aws.ec2_instance_info:
+        region: "us-east-1"  # Update with your region
+        instance_ids:
+          - "i-0d4db83bf6d0c1ae5"  # Update with your instance ID
+      register: ec2_instance_info
+
+    - name: Check if the instance is running
+      fail:
+        msg: "The specified EC2 instance is not running."
+      when: ec2_instance_info.instances[0].state.name != "running"
+
+    - name: Stop the EC2 instance
+      community.aws.ec2_instance:
+        region: "us-east-1"  # Update with your region
+        instance_ids:
+          - "i-0d4db83bf6d0c1ae5"  # Update with your instance ID
+        state: "stopped"
+      register: ec2_stop_result
+
+    - name: Display the result
+      debug:
+        var: ec2_stop_result
+
