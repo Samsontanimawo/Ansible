@@ -1,8 +1,13 @@
+---
 - name: Launching AWS instance using Ansible
+  hosts: localhost
+  tasks:
+    - name: Create EC2 instance
       community.aws.ec2_instance:
-        key_name: "newAnsibleKey" # Update it
-        region: "ca-central-1" # Update it to your requirement
-        instance_type: "t2.micro" # Update it to your requirement
-        image_id: "ami-04978032a1284973a" # Update the AMI
+        key_name: "newAnsibleKey24"  # Update it
+        region: "us-east-1"  # Update it to your requirement
+        instance_type: "t2.micro"  # Update it to your requirement
+        image_id: "ami-023c11a32b0207432"  # Update the AMI
         tags:
-          Name: "Ansible_instance"
+          Name: "New_Ansible_instance"
+
