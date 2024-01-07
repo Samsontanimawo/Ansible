@@ -1,0 +1,17 @@
+- name: Terminate Multiple EC2 Instances
+  hosts: localhost
+  vars:
+    region: "us-east-1"  # Update with your region
+    instance_ids:
+      - "i-0d4db83bf6d0c1ae5" # Update with your instance ID
+     # - "i-080ae62da720e0eb2"
+     # - "i-0166d4c4465fecc3e"
+     # - "i-06b61d5e826db3e94"
+
+  tasks:
+    - name: Terminate the specified EC2 instances
+      community.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_ids: "{{ instance_ids }}"
+        state: absent
+
