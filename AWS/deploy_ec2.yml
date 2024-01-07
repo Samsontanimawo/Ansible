@@ -1,0 +1,11 @@
+- name: Ansible Play
+  hosts: localhost
+  tasks:
+    - name: Launching AWS instance using Ansible
+      community.aws.ec2_instance:
+        key_name: "newAnsibleKey"
+        region: "ca-central-1"
+        instance_type: "t2.micro"
+        image_id: "ami-04978032a1284973a"
+        tags:
+          Name: "newo_instance"

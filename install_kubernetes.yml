@@ -1,0 +1,9 @@
+---
+- name: Install kubectl on Ubuntu
+  hosts: workstations
+  become: true
+
+  tasks:
+    - name: Install kubectl using snap
+      command: snap install kubectl --classic
+

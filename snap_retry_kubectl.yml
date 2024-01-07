@@ -1,0 +1,11 @@
+---
+- name: Install kubectl on Ubuntu
+  hosts: workstations
+  become: true
+
+  tasks:
+    - name: Install kubectl using snap with retry
+      command: snap install kubectl --classic
+      retries: 3
+      delay: 10
+
