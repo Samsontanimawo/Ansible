@@ -1,0 +1,10 @@
+---
+- hosts: workstations
+  become: true
+  tasks:
+    - name: Restart Apache server
+      service:
+        name: apache2  # Change to "httpd" if applicable
+        state: restarted
+      when: ansible_distribution == "Ubuntu"  # Adjust the distribution check if needed
+

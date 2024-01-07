@@ -1,0 +1,13 @@
+---
+- name: Copy Files to Servers
+  hosts: workstations
+  become: true
+  vars:
+    source_folder: "/home/daniel/Ansible/test1/update_cache.yml"
+    destination_folder: "/home/daniel/Ansible/test2"
+  tasks:
+    - name: Copy files to servers
+      synchronize:
+        src: "{{ source_folder }}"
+        dest: "{{ destination_folder }}"
+

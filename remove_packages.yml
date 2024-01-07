@@ -1,0 +1,15 @@
+---
+- name: Remove Unnecessary Packages
+  hosts: workstations
+  become: true
+  vars:
+    unwanted_packages:
+      - package1
+      - package2
+  tasks:
+    - name: Remove unwanted packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      with_items: "{{ unwanted_packages }}"
+

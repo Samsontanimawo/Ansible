@@ -1,0 +1,19 @@
+---
+- name: Copy Multiple Files to Destination Folder
+  hosts: workstations
+  become: true
+  vars:
+    source_folder: "/home/daniel/Ansible/"
+    destination_folder: "/home/daniel/Ansible/Ansible-playbooks/"
+    file_list:
+      - install_system_admin_packages.yml
+      - install_terraform.yml
+      - inventory
+      - restart_apache.yml
+  tasks:
+    - name: Copy files to destination folder
+      copy:
+        src: "{{ source_folder }}/{{ item }}"
+        dest: "{{ destination_folder }}"
+      with_items: "{{ file_list }}"
+

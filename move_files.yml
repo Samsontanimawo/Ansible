@@ -1,0 +1,11 @@
+---
+- name: Move All Files to Destination Folder
+  hosts: workstations
+  become: true
+  vars:
+    source_folder: "/home/daniel/Ansible/test1/"
+    destination_folder: "/home/daniel/Ansible/test2/"
+  tasks:
+    - name: Move all files to destination folder
+      shell: "mv {{ source_folder }}* {{ destination_folder }}"
+

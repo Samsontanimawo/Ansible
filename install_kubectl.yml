@@ -1,0 +1,19 @@
+---
+- name: Install kubectl on Ubuntu
+  hosts: workstations
+  become: true
+
+  tasks:
+    - name: Install kubectl using snap
+      command: snap install kubectl --classic
+
+    - name: Check kubectl version
+      command: kubectl version --client
+      register: kubectl_version
+      changed_when: false
+      failed_when: "'Client Version' not in kubectl_version.stdout"
+
+    - name: Display kubectl version
+      debug:
+        var: kubectl_version.stdout_lines
+

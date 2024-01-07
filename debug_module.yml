@@ -1,0 +1,8 @@
+---
+- name: Debug module
+  hosts: workstations
+  tasks:
+    - name: Debug message
+      ansible.builtin.debug:
+         msg: "Automating boring tasks with ansible."
+

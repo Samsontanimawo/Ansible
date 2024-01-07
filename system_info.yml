@@ -1,0 +1,10 @@
+---
+- name: Display System Information
+  hosts: workstations
+  tasks:
+    - name: Gather system facts
+      setup:
+    - name: Display system information
+      debug:
+        var: ansible_facts
+
