@@ -10,7 +10,7 @@
   tasks:
     - name: Create S3 bucket
       amazon.aws.s3_bucket:
-        name: ansible-aws-s3  # Specify your bucket name
+        name: samson-ansible-playbooks  # Specify your bucket name
         state: present
         region: us-east-1
         aws_access_key: "{{ aws_access_key }}"
