@@ -1,0 +1,21 @@
+---
+- name: Install Splunk on Workstations
+  hosts: splunk_servers
+  vars:
+    splunk_version: "8.2.3"  # Replace with the actual version you want to install
+
+  tasks:
+    - name: Download Splunk
+      get_url:
+        url: "https://www.splunk.com/download/splunk/{{ splunk_version }}/splunk-{{ splunk_version }}-Linux-x86_64.tgz"
+        dest: "/tmp/splunk.tgz"
+
+    - name: Extract Splunk
+      ansible.builtin.unarchive:
+        src: "/tmp/splunk.tgz"
+        dest: "/opt/"
+        remote_src: yes
+
+    - name: Start Splunk
+      command: "/opt/splunk/bin/splunk start --accept-license --answer-yes"
+

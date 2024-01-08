@@ -1,0 +1,27 @@
+---
+- name: Create S3 Buckets with Ansible
+  hosts: localhost
+  connection: local
+  vars_files:
+    - creds.yml
+
+  vars:
+    bucket_names:
+      - ansible-aws-s3-1
+      - ansible-aws-s3-2
+      - ansible-aws-s3-3
+      - ansible-aws-s3-4
+      - ansible-aws-s3-5
+      - ansible-aws-s3-6
+      # Add more bucket names as needed
+
+  tasks:
+    - name: Create S3 buckets
+      amazon.aws.s3_bucket:
+        name: "{{ item }}"
+        state: present
+        region: us-east-1
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      with_items: "{{ bucket_names }}"
+

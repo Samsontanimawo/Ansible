@@ -1,0 +1,31 @@
+---
+- name: Delete files and S3 buckets
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars_files:
+    - creds.yml
+
+  tasks:
+    - name: Delete files from S3 buckets
+      amazon.aws.s3_bucket:
+        bucket: "{{ item }}"
+        delete: yes
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      loop:
+        - ansible-aws-s3-1
+        - ansible-aws-s3-2
+        - ansible-aws-s3-3
+
+    - name: Delete S3 buckets
+      amazon.aws.s3_bucket:
+        bucket_name: "{{ item }}"
+        state: absent
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      loop:
+        - ansible-aws-s3-1
+        - ansible-aws-s3-2
+        - ansible-aws-s3-3
+

@@ -1,0 +1,23 @@
+---
+- name: Move file to S3 Buckets with Ansible
+  hosts: localhost
+  connection: local
+  vars_files:
+    - creds.yml
+
+  vars:
+    bucket_names:
+      - ansible-aws-s3-1
+      - ansible-aws-s3-2
+      - ansible-aws-s3-3
+      # Add more bucket names as needed
+
+  tasks:
+    - name: Move file to S3 buckets
+      community.aws.s3_sync:
+        bucket: "{{ item }}"
+        file_root: /home/daniel/Ansible/AWS/S3  # Replace with the local file path
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+      with_items: "{{ bucket_names }}"
+
