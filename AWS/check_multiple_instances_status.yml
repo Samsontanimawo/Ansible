@@ -1,0 +1,22 @@
+---
+- name: Get EC2 Instances Status
+  hosts: localhost
+  gather_facts: false
+  vars:
+    instance_ids:
+      - i-00093f4f7132a6449  # Replace with your instance IDs
+      - i-0c0a8580a03bf315f
+      - i-044fe1d7e584b0bc1
+    region: us-east-1  # Replace with your AWS region
+
+  tasks:
+    - name: Query AWS for EC2 instance status
+      community.aws.ec2_instance_info:
+        instance_ids: "{{ instance_ids }}"
+        region: "{{ region }}"
+      register: ec2_instances_info
+
+    - name: Display EC2 instances status
+      debug:
+        var: ec2_instances_info.instances | map(attribute='state.name') | list
+

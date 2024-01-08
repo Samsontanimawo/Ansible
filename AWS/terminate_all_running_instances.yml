@@ -1,0 +1,22 @@
+---
+- name: Terminate All Running EC2 Instances
+  hosts: localhost
+  gather_facts: false
+  vars:
+    region: "us-east-1"  # Replace with your AWS region
+
+  tasks:
+    - name: Get running EC2 instances
+      community.aws.ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          instance-state-name: running
+      register: running_instances
+
+    - name: Terminate running EC2 instances
+      community.aws.ec2_instance:
+        instance_ids: "{{ item.instance_id }}"
+        region: "{{ region }}"
+        state: absent
+      loop: "{{ running_instances.instances }}"
+
