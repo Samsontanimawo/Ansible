@@ -1,0 +1,33 @@
+---
+- name: Reboot Multiple EC2 Instances
+  hosts: localhost
+  vars:
+    region: "us-east-1"
+    instance_ids:
+#      - "i-0b231d9b13ea70f14"
+#     - "i-022c398fdd918afa7"
+      - "i-00093f4f7132a6449"
+      - "i-0c0a8580a03bf315f"
+#     - "i-0bed6f40bf1174ac0"
+
+  tasks:
+    - name: Reboot the specified EC2 instances asynchronously
+      community.aws.ec2_instance:
+        instance_ids: "{{ item }}"
+        region: "{{ region }}"
+        state: restarted
+        wait: no
+      async: 180
+      poll: 0
+      with_items: "{{ instance_ids }}"
+      register: reboot_results
+
+    - name: Wait for all EC2 instances to be in the running state
+      wait_for:
+        host: "{{ item }}"
+        port: 22
+        search_regex: "running"
+        delay: 10
+        timeout: 300
+      loop: "{{ instance_ids }}"
+

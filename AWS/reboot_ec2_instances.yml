@@ -1,0 +1,29 @@
+---
+- name: Reboot Multiple EC2 Instances
+  hosts: localhost
+  vars:
+    region: "us-east-1"
+    instance_ids:
+      - "i-0c6c897d364139e1e"
+      - "i-080ae62da720e0eb2"
+      - "i-0166d4c4465fecc3e"
+      - "i-06b61d5e826db3e94"
+    timeout: 180  # Timeout in seconds (3 minutes)
+    delay: 120    # Delay in seconds (2 minutes)
+
+  tasks:
+    - name: Reboot the specified EC2 instances
+      community.aws.ec2_instance:
+        instance_ids: "{{ item }}"
+        region: "{{ region }}"
+        wait: yes
+        delay: "{{ delay }}"
+        timeout: "{{ timeout }}"
+      with_items: "{{ instance_ids }}"
+      register: reboot_results
+
+    - name: Print a message for each instance reboot result
+      debug:
+        msg: "Reboot result for instance {{ item.item }}: {{ item.success }}"
+      with_items: "{{ reboot_results.results }}"
+

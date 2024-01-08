@@ -1,12 +1,13 @@
 - name: Stop Multiple EC2 Instances
   hosts: localhost
   vars:
-    region: "ca-central-1"  # Update with your region
+    region: "us-east-1"  # Update with your region
     instance_ids:
-      - "i-0c6c897d364139e1e"  # Update with your instance IDs
-      - "i-080ae62da720e0eb2"  # Add more instance IDs as needed
-      - "i-0166d4c4465fecc3e"
-      - "i-06b61d5e826db3e94"
+      - "i-00093f4f7132a6449"  # Update with your instance IDs
+      - "i-0c0a8580a03bf315f"  # Add more instance IDs as needed
+      - "i-022c398fdd918afa7"
+      - "i-0b231d9b13ea70f14"
+      - "i-0bed6f40bf1174ac0"
   tasks:
     - name: Get information about the specified EC2 instances
       community.aws.ec2_instance_info:
