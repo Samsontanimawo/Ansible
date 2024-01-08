@@ -1,0 +1,41 @@
+---
+- name: Create AWS Elastic Load Balancer with Security Group and Listeners
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Include AWS credentials
+      include_vars: aws_credentials.yml
+
+    - name: Create security group
+      amazon.aws.ec2_group:
+        name: my-security-group
+        description: My security group
+        vpc_id: vpc-0dee0148424477e4d
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: security_group_result
+
+    - name: Create Load Balancer
+      amazon.aws.ec2_elb_lb:
+        name: my-load-balancer
+        state: present
+        region: us-east-1
+        security_group_names:
+          - "{{ security_group_result.group_id }}"
+        subnets:
+          - subnet-0f1374fee9f18c685
+        listeners:
+          - protocol: HTTP
+            load_balancer_port: 80
+            instance_port: 80
+      register: elb_result
+
+    - name: Print Load Balancer DNS name
+      ansible.builtin.debug:
+        var: elb_result.dns_name
+

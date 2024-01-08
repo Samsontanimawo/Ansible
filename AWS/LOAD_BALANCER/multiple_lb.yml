@@ -1,0 +1,47 @@
+---
+- name: Create Multiple AWS Elastic Load Balancers with Security Groups and Listeners
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Include AWS credentials
+      include_vars: aws_credentials.yml
+
+    - name: Define load balancer configurations
+      set_fact:
+        load_balancers:
+          - name: ansible-lb-1
+            security_group_name: my-security-group
+            subnet_id: subnet-0f1374fee9f18c685
+            listener:
+              protocol: HTTP
+              load_balancer_port: 80
+              instance_port: 80
+          - name: ansible-lb-2
+            security_group_name: my-security-group
+            subnet_id: subnet-0f1374fee9f18c685
+            listener:
+              protocol: HTTPS
+              load_balancer_port: 443
+              instance_port: 80
+              ssl_certificate_id: "arn:aws:iam::123456789012:server-certificate/my-cert"  # Replace with your SSL certificate ARN
+
+    - name: Create Load Balancers
+      loop: "{{ load_balancers }}"
+      loop_control:
+        loop_var: lb
+      amazon.aws.ec2_elb_lb:
+        name: "{{ lb.name }}"
+        state: present
+        region: us-east-1
+        security_group_names:
+          - "{{ lb.security_group_name }}"
+        subnets:
+          - "{{ lb.subnet_id }}"
+        listeners:
+          - protocol: "{{ lb.listener.protocol }}"
+            load_balancer_port: "{{ lb.listener.load_balancer_port }}"
+            instance_port: "{{ lb.listener.instance_port }}"
+            ssl_certificate_id: "{{ lb.listener.ssl_certificate_id | default(omit) }}"
+

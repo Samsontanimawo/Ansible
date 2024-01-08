@@ -1,0 +1,20 @@
+---
+- name: Database Backup Automation
+  hosts: your_database_host
+  become: yes
+
+  tasks:
+    - name: Install PostgreSQL client
+      ansible.builtin.package:
+        name: postgresql-client
+        state: present
+
+    - name: Create a backup directory
+      ansible.builtin.file:
+        path: /var/backups/db_backup
+        state: directory
+
+    - name: Run database backup
+      ansible.builtin.command:
+        cmd: "pg_dump -U your_db_user your_database_name > /var/backups/db_backup/db_backup_{{ ansible_date_time.date }}.sql"
+

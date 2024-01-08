@@ -1,0 +1,16 @@
+---
+- name: Log Rotation Setup
+  hosts: your_target_hosts
+  become: yes
+
+  tasks:
+    - name: Install logrotate
+      ansible.builtin.package:
+        name: logrotate
+        state: present
+
+    - name: Create logrotate configuration
+      ansible.builtin.template:
+        src: /path/to/local/logrotate.conf.j2
+        dest: /etc/logrotate.conf
+

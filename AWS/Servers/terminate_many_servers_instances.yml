@@ -1,0 +1,30 @@
+# Check the ubuntu_servers group or file
+# Run it: ansible-playbook -i inventory.ini terminate_instances.yml
+# pip install boto boto3
+
+---
+- name: Terminate all running instances
+  hosts: ubuntu_servers
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Get running instances
+      community.aws.ec2_instance_info:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+        filters:
+          instance-state-name: running
+      register: running_instances
+
+    - name: Terminate instances
+      community.aws.ec2_instance:
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+        instance_ids: "{{ item.id }}"
+        state: absent
+      with_items: "{{ running_instances.instances }}"
+      when: running_instances.instances | length > 0
+
