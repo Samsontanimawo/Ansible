@@ -1,0 +1,18 @@
+# Use ansible-playbook s3_bucket.yml --ask-vault-pass to prompt and enter the password
+# ansible-vault encrypt creds.yml = Use it for encryption. Add password to the creds.yml file
+---
+- name: create S3 Bucket with Ansible
+  hosts: localhost
+  connection: local
+  vars_files:
+    - creds.yml
+
+  tasks:
+    - name: Create S3 bucket
+      amazon.aws.s3_bucket:
+        name: ansible-aws-s3  # Specify your bucket name
+        state: present
+        region: us-east-1
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+
