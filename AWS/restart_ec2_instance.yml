@@ -1,0 +1,13 @@
+- name: Reboot EC2 Instance
+  hosts: localhost
+  vars:
+    region: "us-east-1"  # Update with your region
+    instance_id: "i-0b231d9b13ea70f14"  # Update with your instance ID
+
+  tasks:
+    - name: Reboot the specified EC2 instance
+      community.aws.ec2_instance:
+        region: "{{ region }}"
+        instance_ids: "{{ instance_id }}"
+        state: restarted
+
