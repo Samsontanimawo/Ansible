@@ -1,0 +1,39 @@
+- name: Ansible Play
+  hosts: localhost
+  tasks:
+    - name: Launching AWS instance using Ansible
+      community.aws.ec2_instance:
+        key_name: "newAnsibleKey24"
+        region: "us-east-1"
+        instance_type: "t2.micro"
+        image_id: "ami-0c7217cdde317cfec"
+        tags:
+          Name: "Ansible_instance"
+
+    - name: Launching AWS instance using Ansible
+      community.aws.ec2_instance:
+        key_name: "newAnsibleKey24"
+        region: "us-east-1"
+        instance_type: "t2.micro"
+        image_id: "ami-0c7217cdde317cfec"
+        tags:
+          Name: "Ansible_instance2"
+
+    - name: Launching AWS instance using Ansible
+      community.aws.ec2_instance:
+        key_name: "newAnsibleKey24"
+        region: "us-east-1"
+        instance_type: "t2.micro"
+        image_id: "ami-0c7217cdde317cfec"
+        tags:
+          Name: "Ansible_instance3"
+
+
+    - name: Launching AWS instance using Ansible
+      community.aws.ec2_instance:
+        key_name: "newAnsibleKey24"
+        region: "us-east-1"
+        instance_type: "t2.micro"
+        image_id: "ami-0c7217cdde317cfec"
+        tags:
+          Name: "Ansible_instance4"

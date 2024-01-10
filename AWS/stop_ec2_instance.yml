@@ -5,7 +5,7 @@
       community.aws.ec2_instance_info:
         region: "us-east-1"  # Update with your region
         instance_ids:
-          - "i-0b231d9b13ea70f14"  # Update with your instance ID
+          - "i-060aff5ba424e99ba"  # Update with your instance ID
       register: ec2_instance_info
 
     - name: Check if the instance is running
@@ -17,7 +17,7 @@
       community.aws.ec2_instance:
         region: "us-east-1"  # Update with your region
         instance_ids:
-          - "i-0b231d9b13ea70f14"  # Update with your instance ID
+          - "i-060aff5ba424e99ba"  # Update with your instance ID
         state: "stopped"
       register: ec2_stop_result
 

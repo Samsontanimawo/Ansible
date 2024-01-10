@@ -9,5 +9,5 @@
         instance_type: "t2.micro"  # Update it to your requirement
         image_id: "ami-023c11a32b0207432"  # Update the AMI
         tags:
-          Name: "New_Ansible_instance"
+          Name: "New_instance"
 

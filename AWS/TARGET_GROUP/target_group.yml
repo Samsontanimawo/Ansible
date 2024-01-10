@@ -1,0 +1,27 @@
+---
+- name: Create Target Group
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create Target Group
+      amazon.aws.elbv2_target_group:
+        name: ansible-automation-target-group
+        protocol: HTTP
+        port: 80
+        vpc_id: vpc-0dee0148424477e4d
+        health_check_protocol: HTTP
+        health_check_port: traffic-port
+        health_check_path: "/"
+        health_check_interval_seconds: 30
+        health_check_timeout_seconds: 5
+        healthy_threshold_count: 5
+        unhealthy_threshold_count: 2
+        deregistration_delay_timeout_seconds: 300
+        target_type: instance
+        state: present
+      register: target_group_result
+
+    - name: Print Target Group ARN
+      debug:
+        var: target_group_result.target_group.arn
+

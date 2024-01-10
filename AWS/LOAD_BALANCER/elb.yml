@@ -1,0 +1,38 @@
+---
+- name: Create Elastic Load Balancer
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Create ELB
+      amazon.aws.elb_application_lb:
+        name: my-elb
+        subnets:
+          - subnet-0123456789abcdef0
+          - subnet-0123456789abcdef1
+          - subnet-0123456789abcdef2
+          - subnet-0123456789abcdef3
+          - subnet-0123456789abcdef4
+          - subnet-0123456789abcdef5
+        security_groups:
+          - sg-0f210b20977d870e6
+        listeners:
+          - port: 80
+            protocol: TCP
+            default_actions:
+              - type: fixed-response
+                fixed_response_config:
+                  content_type: text/plain
+                  message_body: "OK"
+                  status_code: 200
+        target_groups:
+          - name: ansible-automation-lb
+            protocol: TCP
+            port: 80
+        region: us-east-1
+        vpc_id: vpc-0dee0148424477e4d
+      register: elb_result
+
+    - name: Print ELB DNS Name
+      debug:
+        var: elb_result.dns_name
+

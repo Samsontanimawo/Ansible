@@ -1,0 +1,15 @@
+---
+- name: Check EC2 Instance Health
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get EC2 Instance Information
+      community.aws.ec2_instance_info:
+        instance_ids:
+          - "i-0c0a8580a03bf315f"
+      register: instance_info
+
+    - name: Display EC2 Instance Health
+      debug:
+        var: instance_info.instances[0].state.name
+
